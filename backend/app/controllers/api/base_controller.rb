@@ -22,6 +22,9 @@ module Api
         name: deck.name,
         archetype: deck.archetype,
         notes: deck.notes,
+        deck_code: deck.deck_code,
+        deck_url: deck.deck_url,
+        deck_list: deck.deck_list,
         created_at: deck.created_at,
         updated_at: deck.updated_at
       }

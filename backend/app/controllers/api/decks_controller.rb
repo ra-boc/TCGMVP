@@ -43,7 +43,7 @@ module Api
     end
 
     def deck_params
-      params.require(:deck).permit(:name, :archetype, :notes)
+      params.require(:deck).permit(:name, :archetype, :notes, :deck_code, :deck_url, :deck_list)
     end
   end
 end

@@ -8,6 +8,9 @@ export type Deck = {
   name: string
   archetype: string
   notes: string | null
+  deck_code: string | null
+  deck_url: string | null
+  deck_list: string | null
   created_at: string
   updated_at: string
 }
@@ -16,6 +19,9 @@ export type DeckInput = {
   name: string
   archetype: string
   notes?: string
+  deck_code?: string
+  deck_url?: string
+  deck_list?: string
 }
 
 export type MatchRecord = {

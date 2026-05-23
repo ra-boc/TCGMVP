@@ -6,6 +6,9 @@ import { api, type DeckInput } from '../api/client'
 const initialForm: DeckInput = {
   name: '',
   archetype: '',
+  deck_code: '',
+  deck_url: '',
+  deck_list: '',
   notes: '',
 }
 
@@ -24,7 +27,16 @@ export function DeckFormPage() {
 
     api
       .getDeck(deckId)
-      .then((deck) => setForm({ name: deck.name, archetype: deck.archetype, notes: deck.notes ?? '' }))
+      .then((deck) =>
+        setForm({
+          name: deck.name,
+          archetype: deck.archetype,
+          deck_code: deck.deck_code ?? '',
+          deck_url: deck.deck_url ?? '',
+          deck_list: deck.deck_list ?? '',
+          notes: deck.notes ?? '',
+        })
+      )
       .catch((err: Error) => setError(err.message))
       .finally(() => setLoading(false))
   }, [deckId])
@@ -83,12 +95,40 @@ export function DeckFormPage() {
                 placeholder="例: Forestcraft"
               />
             </label>
+            <div className="form-grid">
+              <label>
+                <span>デッキコード</span>
+                <input
+                  value={form.deck_code}
+                  onChange={(event) => setForm((current) => ({ ...current, deck_code: event.target.value }))}
+                  placeholder="例: a1b2"
+                />
+              </label>
+              <label>
+                <span>デッキポータルURL</span>
+                <input
+                  type="url"
+                  value={form.deck_url}
+                  onChange={(event) => setForm((current) => ({ ...current, deck_url: event.target.value }))}
+                  placeholder="例: https://shadowverse-wb.com/ja/deck/?format_1..."
+                />
+              </label>
+            </div>
+            <label>
+              <span>カードリスト / デッキの中身</span>
+              <textarea
+                value={form.deck_list}
+                onChange={(event) => setForm((current) => ({ ...current, deck_list: event.target.value }))}
+                placeholder="登録したいカード名や枚数、詳細などを入力してください。"
+                rows={6}
+              />
+            </label>
             <label>
               <span>メモ</span>
               <textarea
                 value={form.notes}
                 onChange={(event) => setForm((current) => ({ ...current, notes: event.target.value }))}
-                rows={5}
+                rows={3}
               />
             </label>
             <div className="form-actions">

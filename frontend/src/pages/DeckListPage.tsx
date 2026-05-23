@@ -53,6 +53,8 @@ export function DeckListPage() {
                 <tr>
                   <th>名前</th>
                   <th>クラス/タイプ</th>
+                  <th>コード / ポータル</th>
+                  <th>カードリスト</th>
                   <th>メモ</th>
                   <th className="actions-cell">操作</th>
                 </tr>
@@ -64,6 +66,65 @@ export function DeckListPage() {
                       <strong>{deck.name}</strong>
                     </td>
                     <td>{deck.archetype || '-'}</td>
+                    <td>
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', alignItems: 'flex-start' }}>
+                        {deck.deck_code ? (
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                            <span className="pill" style={{ background: 'var(--surface-muted)', color: 'var(--text)', border: '1px solid var(--border)', fontFamily: 'monospace', fontWeight: 'bold', minWidth: 'auto' }}>
+                              {deck.deck_code}
+                            </span>
+                            <button
+                              type="button"
+                              className="button compact secondary"
+                              style={{ minHeight: '24px', height: '24px', padding: '0 6px', fontSize: '11px' }}
+                              onClick={() => {
+                                navigator.clipboard.writeText(deck.deck_code || '')
+                                alert('デッキコードをコピーしました！')
+                              }}
+                            >
+                              コピー
+                            </button>
+                          </div>
+                        ) : null}
+                        {deck.deck_url ? (
+                          <a
+                            href={deck.deck_url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            style={{ fontSize: '13px', color: 'var(--primary)', fontWeight: 'bold', display: 'inline-flex', alignItems: 'center', gap: '4px', textDecoration: 'none' }}
+                          >
+                            🔗 ポータルを開く
+                          </a>
+                        ) : (
+                          !deck.deck_code && '-'
+                        )}
+                      </div>
+                    </td>
+                    <td>
+                      {deck.deck_list ? (
+                        <details style={{ fontSize: '13px', cursor: 'pointer' }}>
+                          <summary style={{ color: 'var(--primary)', fontWeight: '600' }}>カードを表示 ({deck.deck_list.split('\n').filter(Boolean).length}件)</summary>
+                          <pre style={{
+                            marginTop: '8px',
+                            padding: '8px',
+                            background: 'var(--surface-muted)',
+                            border: '1px solid var(--border)',
+                            borderRadius: '6px',
+                            maxHeight: '120px',
+                            overflowY: 'auto',
+                            whiteSpace: 'pre-wrap',
+                            fontFamily: 'monospace',
+                            fontSize: '12px',
+                            textAlign: 'left',
+                            cursor: 'default'
+                          }} onClick={(e) => e.stopPropagation()}>
+                            {deck.deck_list}
+                          </pre>
+                        </details>
+                      ) : (
+                        '-'
+                      )}
+                    </td>
                     <td>{deck.notes || '-'}</td>
                     <td className="actions-cell">
                       <Link className="button compact secondary" to={`/decks/${deck.id}/edit`}>

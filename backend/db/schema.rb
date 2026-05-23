@@ -10,10 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_05_24_000300) do
+ActiveRecord::Schema[8.1].define(version: 2026_05_24_000301) do
   create_table "decks", force: :cascade do |t|
     t.string "archetype", default: "", null: false
     t.datetime "created_at", null: false
+    t.string "deck_code"
+    t.text "deck_list"
+    t.string "deck_url"
     t.string "name", null: false
     t.text "notes"
     t.datetime "updated_at", null: false
