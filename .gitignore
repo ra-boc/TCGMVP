@@ -1,0 +1,21 @@
+# Rails secrets and local state
+backend/config/master.key
+backend/.kamal/secrets
+backend/storage/*.sqlite3
+backend/storage/*.sqlite3-*
+backend/tmp/
+backend/log/*
+!backend/log/.keep
+
+# Frontend dependencies and build output
+frontend/node_modules/
+frontend/dist/
+
+# Local environment files
+.env
+.env.*
+!.env.example
+
+# OS/editor noise
+.DS_Store
+Thumbs.db
